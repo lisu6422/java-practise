@@ -1,5 +1,6 @@
 package com.example.spring_hibernate_validator.entity;
 
+import com.example.spring_hibernate_validator.validator.FlagValidator;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -10,14 +11,18 @@ import java.io.Serializable;
 
 @Data
 public class DemoEntity implements Serializable {
-    @NotBlank
-    @Length(min = 3, max = 10)
-    private String name;
+	@NotBlank
+	@Length(min = 3, max = 10)
+	private String name;
 
-    @Min(value = 1)
-    private int age;
+	@Min(value = 1)
+	private int age;
 
-    @NotBlank
-    @Email
-    private String email;
+	@NotBlank
+	@Email
+	private String email;
+
+	@NotBlank
+	@FlagValidator(values = "1,2,3")
+	private String flag;
 }
