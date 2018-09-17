@@ -32,22 +32,15 @@ public class IndexController {
 
 	@PostMapping
 	public String customValidator(@Valid DemoEntity entity, BindingResult result) {
-		if (result.hasErrors()) {
-			StringBuffer msg = new StringBuffer();
-
-			List<FieldError> fieldErrors = result.getFieldErrors();
-			Locale currentLocal = LocaleContextHolder.getLocale();
-			for (FieldError fieldError : fieldErrors) {
-				val errorMessage = messageSource.getMessage(fieldError, currentLocal);
-				msg.append(fieldError.getField() + ":" + errorMessage + ",");
-			}
-			return msg.toString();
-		}
-		return "pass";
+		return getValidatorMessage(result);
 	}
 
 	@PostMapping("/group")
-	public String groupValidator(@Validated DriverEntity entity, BindingResult result) {
+	public String groupValidator(@Validated({GroupA.class}) DriverEntity entity, BindingResult result) {
+		return getValidatorMessage(result);
+	}
+
+	private String getValidatorMessage(BindingResult result) {
 		if (result.hasErrors()) {
 			StringBuffer msg = new StringBuffer();
 
